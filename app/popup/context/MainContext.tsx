@@ -20,7 +20,8 @@ export default function MainContextProvider(props: {
     | null
     | undefined;
 }) {
-  const [mode, setMode] = React.useState<"light" | "dark">("light");
+  const [mode, setMode] = React.useState<"light" | "dark">();
+
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
@@ -29,6 +30,12 @@ export default function MainContextProvider(props: {
     }),
     []
   );
+  chrome.storage.local.set({ theme: mode });
+  React.useEffect(() => {
+    chrome.storage.local.get("theme", (data) => {
+      setMode(data.theme);
+    });
+  }, [mode]);
 
   const theme = React.useMemo(
     () =>
@@ -42,7 +49,7 @@ export default function MainContextProvider(props: {
       }),
     [mode]
   );
-
+  //
   const contextValue = {
     toggleColorMode: colorMode.toggleColorMode,
   };

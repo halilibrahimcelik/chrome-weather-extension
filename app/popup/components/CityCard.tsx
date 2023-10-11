@@ -12,9 +12,9 @@ type Props = {
 };
 const CityCard: React.FC<Props> = ({ city }) => {
   useEffect(() => {
-    fetchRequest(city)
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+    // fetchRequest(city)
+    //   .then((data) => console.log(data))
+    //   .catch((err) => console.log(err));
   }, [city]);
   return (
     <Card sx={{ minWidth: 275 }}>

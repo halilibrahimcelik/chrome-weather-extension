@@ -7,6 +7,7 @@ import { useMainContext } from "../context/MainContext";
 const DarkMode = () => {
   const theme = useTheme();
   const { toggleColorMode } = useMainContext();
+
   return (
     <Box
       sx={{
@@ -16,7 +17,7 @@ const DarkMode = () => {
         justifyContent: "center",
         bgcolor: "background.default",
         color: "text.primary",
-        borderRadius: 1,
+        borderRadius: 0,
         p: 3,
       }}
     >
