@@ -4,6 +4,6 @@ export default defineContentScript({
 
   main(ctx) {
     // Executed when content script is loaded
-    console.log("Content script loaded!");
+    console.log("Content scripsst loaded!");
   },
 });
