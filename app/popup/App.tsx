@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect } from "react";
 
 import Button from "./components/Button";
+import { API_KEY, fetchRequest } from "./utils/api";
 
 const App = () => {
-  const [count, setCount] = useState(0);
-
+  useEffect(() => {
+    fetchRequest("Ankara")
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <>
       <Button />
