@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import { OpenweatherData, fetchRequest } from "../utils/api";
-import { Grid } from "@mui/material";
+import { Grid, Skeleton } from "@mui/material";
 
 type Props = {
   city: string;
@@ -19,20 +19,14 @@ const CityCard: React.FC<Props> = ({ city }) => {
       .catch((err) => console.log(err));
   }, [city]);
   console.log(weatherInfo);
-  if (!weatherInfo)
-    return (
-      <Typography variant="h4" sx={{ color: "text.primary" }}>
-        Loading...
-      </Typography>
-    );
+
   return (
     <Card sx={{ minWidth: 340, borderRadius: 0 }}>
       <CardContent>
         <Grid container justifyContent={"space-between"} alignItems={"center"}>
           <Grid item xs={6}>
             <Typography variant="h4" sx={{ color: "primary.main" }}>
-              {" "}
-              {city}{" "}
+              {!weatherInfo ? <Skeleton /> : city}
             </Typography>
           </Grid>
           <Grid
@@ -42,7 +36,11 @@ const CityCard: React.FC<Props> = ({ city }) => {
             justifyContent={"flex-end"}
           >
             <Typography variant="h6" sx={{ color: "primary.main" }}>
-              {weatherInfo.main.temp}°C
+              {!weatherInfo ? (
+                <Skeleton width={100} />
+              ) : (
+                `${weatherInfo.main.temp}°C`
+              )}
             </Typography>
           </Grid>
         </Grid>
@@ -50,7 +48,7 @@ const CityCard: React.FC<Props> = ({ city }) => {
         <Grid container spacing={2}>
           <Grid
             item
-            xs={6}
+            xs={8}
             sx={{
               display: "flex",
               alignItems: "start",
@@ -63,27 +61,47 @@ const CityCard: React.FC<Props> = ({ city }) => {
               component={"span"}
               sx={{ color: "text.primary", fontSize: 13 }}
             >
-              Feels Like {weatherInfo.main.feels_like}°C
+              {!weatherInfo ? (
+                <Skeleton width={150} height={30} />
+              ) : (
+                ` Feels Like ${weatherInfo.main.feels_like}°C`
+              )}
             </Typography>
             <Typography component={"span"} sx={{ color: "text.primary" }}>
-              Max: {weatherInfo.main.temp_max}°C
+              {!weatherInfo ? (
+                <Skeleton width={150} height={30} />
+              ) : (
+                ` Max ${weatherInfo.main.temp_max}°C`
+              )}
             </Typography>
             <Typography component={"span"} sx={{ color: "text.primary" }}>
-              Min: {weatherInfo.main.temp_min}°C
+              {!weatherInfo ? (
+                <Skeleton width={150} height={30} />
+              ) : (
+                ` Min ${weatherInfo.main.temp_min}°C`
+              )}
             </Typography>
           </Grid>
-          <Grid item xs={6}>
-            <img
-              src={`https://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`}
-              alt={weatherInfo.weather[0].description}
-              width={100}
-              className="object-cover h-auto w-full"
-            />
+          <Grid item xs={4}>
+            {!weatherInfo ? (
+              <Skeleton width={100} height={100} variant="circular" />
+            ) : (
+              <img
+                src={`https://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`}
+                alt={weatherInfo.weather[0].description}
+                width={100}
+                className="object-cover h-auto w-full"
+              />
+            )}
           </Grid>
         </Grid>
       </CardContent>
       <CardActions>
-        <Button size="medium">Learn </Button>
+        {!weatherInfo ? (
+          <Skeleton className="ml-3" width={150} height={40} />
+        ) : (
+          <Button size="medium">Learn More</Button>
+        )}
       </CardActions>
     </Card>
   );

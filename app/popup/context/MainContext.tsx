@@ -50,8 +50,8 @@ export default function MainContextProvider(props: {
             contrastText: "#fff",
           },
           background: {
-            default: mode === "light" ? "#bdbdbdc1" : "#0e0c0c",
-            paper: mode === "light" ? "#bdbdbdc1" : "#0e0c0c",
+            default: mode === "light" ? "#dadada" : "#0e0c0c",
+            paper: mode === "light" ? "#dadada" : "#0e0c0c",
           },
           text: {
             primary: mode === "light" ? "#b84106" : "#e6e2e2c1",
