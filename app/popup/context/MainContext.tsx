@@ -46,10 +46,15 @@ export default function MainContextProvider(props: {
             light: mode === "light" ? "#7c7c7c" : "#2fff1c",
             main: mode === "light" ? "#580b0b" : "#ffffff",
             dark: "#002884",
+
             contrastText: "#fff",
           },
+          background: {
+            default: mode === "light" ? "#bdbdbdc1" : "#0e0c0c",
+            paper: mode === "light" ? "#bdbdbdc1" : "#0e0c0c",
+          },
           text: {
-            primary: mode === "light" ? "#b84106" : "#f3f3f3c1",
+            primary: mode === "light" ? "#b84106" : "#e6e2e2c1",
             secondary: mode === "light" ? "#b80c0c" : "#ffffff",
           },
         },

@@ -83,7 +83,7 @@ const CityCard: React.FC<Props> = ({ city }) => {
         </Grid>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="medium">Learn </Button>
       </CardActions>
     </Card>
   );
