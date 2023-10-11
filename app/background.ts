@@ -6,4 +6,9 @@ export default defineBackground(() => {
       contexts: ["all"],
     });
   });
+  chrome.storage.local.get(["theme"], (res) => {
+    chrome.storage.local.set({
+      theme: "theme" in res ? res.theme : "light",
+    });
+  });
 });

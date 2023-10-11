@@ -1,17 +1,16 @@
-import { useEffect } from "react";
-
-import Button from "./components/Button";
-import { API_KEY, fetchRequest } from "./utils/api";
+import "@fontsource/ibm-plex-mono/300.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import "@fontsource/ibm-plex-mono/600.css";
+import "@fontsource/ibm-plex-mono/700.css";
+import CityCard from "./components/CityCard";
+import DarkMode from "./components/DarkMode";
 
 const App = () => {
-  useEffect(() => {
-    fetchRequest("Ankara")
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
-  }, []);
   return (
     <>
-      <Button />
+      <DarkMode />
+      <CityCard city="Istanbul" />
     </>
   );
 };
