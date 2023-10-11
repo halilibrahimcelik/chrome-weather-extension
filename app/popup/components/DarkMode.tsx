@@ -14,11 +14,12 @@ const DarkMode = () => {
         display: "flex",
         width: "100%",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "end",
         bgcolor: "background.default",
         color: "text.primary",
         borderRadius: 0,
-        p: 3,
+        py: 2,
+        px: 1,
       }}
     >
       {theme.palette.mode} mode

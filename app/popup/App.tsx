@@ -10,7 +10,7 @@ const App = () => {
   return (
     <>
       <DarkMode />
-      <CityCard city="Ankara" />
+      <CityCard city="Istanbul" />
     </>
   );
 };

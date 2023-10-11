@@ -42,7 +42,18 @@ export default function MainContextProvider(props: {
       createTheme({
         palette: {
           mode,
+          primary: {
+            light: mode === "light" ? "#7c7c7c" : "#2fff1c",
+            main: mode === "light" ? "#580b0b" : "#ffffff",
+            dark: "#002884",
+            contrastText: "#fff",
+          },
+          text: {
+            primary: mode === "light" ? "#b84106" : "#f3f3f3c1",
+            secondary: mode === "light" ? "#b80c0c" : "#ffffff",
+          },
         },
+
         typography: {
           fontFamily: ["IBM Plex Mono", "sans-serif"].join(","),
         },
