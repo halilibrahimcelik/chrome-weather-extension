@@ -5,7 +5,9 @@ import { API_KEY, fetchRequest } from "./utils/api";
 
 const App = () => {
   useEffect(() => {
-    console.log(fetchRequest("Ankara").);
+    fetchRequest("Ankara")
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
   }, []);
   return (
     <>
