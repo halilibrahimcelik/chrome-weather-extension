@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { OpenweatherData, fetchRequest } from "../utils/api";
 import { Divider, Grid, Skeleton } from "@mui/material";
 import { motion } from "framer-motion";
-
+import ClearIcon from "@mui/icons-material/Clear";
 type Props = {
   city: string;
 };

@@ -12,8 +12,6 @@ const CardList = ({ children }: Props) => {
         component={motion.ul}
         sx={{
           listStyle: "none",
-          maxHeight: "400px ",
-          overflow: "auto",
         }}
       >
         {children}

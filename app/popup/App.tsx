@@ -6,15 +6,18 @@ import "@fontsource/ibm-plex-mono/700.css";
 import CityCard from "./components/CityCard";
 import DarkMode from "./components/DarkMode";
 import CardList from "./components/CardList";
+import SearchForm from "./components/SearchForm";
 
 const App = () => {
   return (
     <>
       <DarkMode />
-      <CardList>
-        <CityCard city="İzmir" />
-        <CityCard city="Ankara" />
-      </CardList>
+      <main className="max-h-[400px] overflow-auto">
+        <SearchForm />
+        <CardList>
+          <CityCard city="İzmir" />
+        </CardList>
+      </main>
     </>
   );
 };
