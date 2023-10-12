@@ -7,15 +7,27 @@ import CityCard from "./components/CityCard";
 import DarkMode from "./components/DarkMode";
 import CardList from "./components/CardList";
 import SearchForm from "./components/SearchForm";
+import { useMainContext } from "./context/MainContext";
+import { useEffect } from "react";
 
 const App = () => {
+  const { cityList, setCityList } = useMainContext();
+  console.log(cityList);
+  useEffect(() => {
+    chrome.storage.local.get("cityList", (res) => {
+      console.log(res.cityList);
+      setCityList(res.cityList);
+    });
+  }, []);
   return (
     <>
       <DarkMode />
-      <main className="max-h-[400px] overflow-auto">
+      <main className="max-h-[400px] min-w-[340px] overflow-auto">
         <SearchForm />
         <CardList>
-          <CityCard city="İzmir" />
+          {cityList?.map((city) => {
+            return <CityCard key={city.id} info={city} />;
+          })}
         </CardList>
       </main>
     </>

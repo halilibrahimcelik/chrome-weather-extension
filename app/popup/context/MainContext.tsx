@@ -1,9 +1,27 @@
 import * as React from "react";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { OpenweatherData } from "../utils/api";
+type MainContextType = {
+  toggleColorMode: () => void;
+  cityList: OpenweatherData[] | undefined;
+  setCityList: React.Dispatch<
+    React.SetStateAction<OpenweatherData[] | undefined>
+  >;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setError: React.Dispatch<React.SetStateAction<string | null>>;
+  loading: boolean;
+  error: string | null;
+};
 
-export const MainContext = React.createContext({
+export const MainContext = React.createContext<MainContextType>({
   toggleColorMode: () => {},
+  cityList: [],
+  setCityList: () => {},
+  setLoading: () => {},
+  setError: () => {},
+  loading: false,
+  error: "",
 });
 
 export const useMainContext = () => React.useContext(MainContext);
@@ -20,7 +38,11 @@ export default function MainContextProvider(props: {
     | undefined;
 }) {
   const [mode, setMode] = React.useState<"light" | "dark">();
-
+  const [cityList, setCityList] = React.useState<
+    OpenweatherData[] | undefined
+  >();
+  const [error, setError] = React.useState<string | null>("");
+  const [loading, setLoading] = React.useState<boolean>(false);
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
@@ -30,6 +52,7 @@ export default function MainContextProvider(props: {
     []
   );
   chrome.storage.local.set({ theme: mode });
+  chrome.storage.local.set({ cityList });
   React.useEffect(() => {
     chrome.storage.local.get("theme", (data) => {
       setMode(data.theme);
@@ -67,6 +90,12 @@ export default function MainContextProvider(props: {
   //
   const contextValue = {
     toggleColorMode: colorMode.toggleColorMode,
+    cityList,
+    setCityList,
+    loading,
+    setLoading,
+    error,
+    setError,
   };
   return (
     <MainContext.Provider value={contextValue}>
