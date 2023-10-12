@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import { OpenweatherData, fetchRequest } from "../utils/api";
-import { Grid, Skeleton } from "@mui/material";
+import { Divider, Grid, Skeleton } from "@mui/material";
 
 type Props = {
   city: string;
@@ -21,7 +21,7 @@ const CityCard: React.FC<Props> = ({ city }) => {
   console.log(weatherInfo);
 
   return (
-    <Card sx={{ minWidth: 340, borderRadius: 0 }}>
+    <Card component={"li"} sx={{ minWidth: 340, borderRadius: 0 }}>
       <CardContent>
         <Grid container justifyContent={"space-between"} alignItems={"center"}>
           <Grid item xs={6}>
@@ -103,6 +103,7 @@ const CityCard: React.FC<Props> = ({ city }) => {
           <Button size="medium">Learn More</Button>
         )}
       </CardActions>
+      <Divider />
     </Card>
   );
 };
