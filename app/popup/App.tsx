@@ -12,7 +12,7 @@ const App = () => {
     <>
       <DarkMode />
       <CardList>
-        <CityCard city="Istanbul" />
+        <CityCard city="İzmir" />
         <CityCard city="Ankara" />
       </CardList>
     </>

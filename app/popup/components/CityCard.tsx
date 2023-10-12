@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import { OpenweatherData, fetchRequest } from "../utils/api";
 import { Divider, Grid, Skeleton } from "@mui/material";
+import { motion } from "framer-motion";
 
 type Props = {
   city: string;
@@ -21,7 +22,14 @@ const CityCard: React.FC<Props> = ({ city }) => {
   console.log(weatherInfo);
 
   return (
-    <Card component={"li"} sx={{ minWidth: 340, borderRadius: 0 }}>
+    <Card
+      component={motion.li}
+      initial={{ scale: 0.5, opacity: 0, y: -100 }}
+      whileInView={{ scale: 1, opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeIn", staggerChildren: 0.4 }}
+      exit={{ scale: 0.5, opacity: 0, y: -100 }}
+      sx={{ minWidth: 340, borderRadius: 0 }}
+    >
       <CardContent>
         <Grid container justifyContent={"space-between"} alignItems={"center"}>
           <Grid item xs={6}>
