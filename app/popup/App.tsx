@@ -9,10 +9,10 @@ import CardList from "./components/CardList";
 import SearchForm from "./components/SearchForm";
 import { useMainContext } from "./context/MainContext";
 import { useEffect } from "react";
-
+import "./utils/api";
 const App = () => {
   const { cityList, setCityList } = useMainContext();
-  console.log(cityList);
+
   useEffect(() => {
     chrome.storage.local.get("cityList", (res) => {
       console.log(res.cityList);

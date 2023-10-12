@@ -7,10 +7,19 @@ type Props = {};
 
 const SearchForm: React.FC<Props> = () => {
   const searchValue = useRef<HTMLInputElement>(null);
-  const { setCityList, setError, error } = useMainContext();
+  const { setCityList, setError, error, cityList, setLoading } =
+    useMainContext();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const city = searchValue.current?.value as string;
+
+    for (const cityData of cityList!) {
+      if (cityData.name.trim().toLowerCase() === city.trim().toLowerCase()) {
+        setError("City already exists");
+        return;
+      }
+    }
+
     fetchRequest(city)
       .then((data) => {
         setError(null);
@@ -22,7 +31,10 @@ const SearchForm: React.FC<Props> = () => {
           }
         });
       })
-      .catch((err) => setError(err));
+      .catch((err) => setError(err))
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <Box
@@ -48,7 +60,7 @@ const SearchForm: React.FC<Props> = () => {
         variant="outlined"
         autoFocus={true}
         error={error ? true : false}
-        helperText={error ? "Please write a valid city name" : " "}
+        helperText={error ? `${error} ` : " "}
       />
       <Button
         type="submit"
