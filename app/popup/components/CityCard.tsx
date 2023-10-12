@@ -4,22 +4,28 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
-import { OpenweatherData, fetchRequest } from "../utils/api";
+
+import { OpenweatherData } from "../utils/api";
 import { Divider, Grid, Skeleton } from "@mui/material";
 import { motion } from "framer-motion";
+import ClearIcon from "@mui/icons-material/Clear";
+import { useMainContext } from "../context/MainContext";
 
 type Props = {
-  city: string;
+  info: OpenweatherData;
 };
-const CityCard: React.FC<Props> = ({ city }) => {
-  const [weatherInfo, setWeatherInfo] = useState<OpenweatherData | null>(null);
-  useEffect(() => {
-    fetchRequest(city)
-      .then((data) => setWeatherInfo(data))
-      .catch((err) => console.log(err));
-  }, [city]);
-  console.log(weatherInfo);
+const CityCard: React.FC<Props> = ({ info }) => {
+  const { loading, cityList, setCityList } = useMainContext();
+  const { name, main, weather, id } = info;
+  const weatherInfo = loading;
+  const handleDelete = (id: number) => {
+    if (cityList) {
+      const newCityList = cityList.filter((city) => city.id !== id);
+
+      setCityList(newCityList);
+      chrome.storage.local.set({ cityList: newCityList });
+    }
+  };
 
   return (
     <Card
@@ -34,7 +40,7 @@ const CityCard: React.FC<Props> = ({ city }) => {
         <Grid container justifyContent={"space-between"} alignItems={"center"}>
           <Grid item xs={6}>
             <Typography variant="h4" sx={{ color: "primary.main" }}>
-              {!weatherInfo ? <Skeleton /> : city}
+              {weatherInfo ? <Skeleton /> : name}
             </Typography>
           </Grid>
           <Grid
@@ -44,11 +50,7 @@ const CityCard: React.FC<Props> = ({ city }) => {
             justifyContent={"flex-end"}
           >
             <Typography variant="h6" sx={{ color: "primary.main" }}>
-              {!weatherInfo ? (
-                <Skeleton width={100} />
-              ) : (
-                `${weatherInfo.main.temp}°C`
-              )}
+              {weatherInfo ? <Skeleton width={100} /> : `${main.temp}°C`}
             </Typography>
           </Grid>
         </Grid>
@@ -69,34 +71,34 @@ const CityCard: React.FC<Props> = ({ city }) => {
               component={"span"}
               sx={{ color: "text.primary", fontSize: 13 }}
             >
-              {!weatherInfo ? (
+              {weatherInfo ? (
                 <Skeleton width={150} height={30} />
               ) : (
-                ` Feels Like ${weatherInfo.main.feels_like}°C`
+                ` Feels Like ${main.feels_like}°C`
               )}
             </Typography>
             <Typography component={"span"} sx={{ color: "text.primary" }}>
-              {!weatherInfo ? (
+              {weatherInfo ? (
                 <Skeleton width={150} height={30} />
               ) : (
-                ` Max ${weatherInfo.main.temp_max}°C`
+                ` Max ${main.temp_max}°C`
               )}
             </Typography>
             <Typography component={"span"} sx={{ color: "text.primary" }}>
-              {!weatherInfo ? (
+              {weatherInfo ? (
                 <Skeleton width={150} height={30} />
               ) : (
-                ` Min ${weatherInfo.main.temp_min}°C`
+                ` Min ${main.temp_min}°C`
               )}
             </Typography>
           </Grid>
           <Grid item xs={4}>
-            {!weatherInfo ? (
+            {weatherInfo ? (
               <Skeleton width={100} height={100} variant="circular" />
             ) : (
               <img
-                src={`https://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`}
-                alt={weatherInfo.weather[0].description}
+                src={`https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
+                alt={weather[0].description}
                 width={100}
                 className="object-cover h-auto w-full"
               />
@@ -105,10 +107,17 @@ const CityCard: React.FC<Props> = ({ city }) => {
         </Grid>
       </CardContent>
       <CardActions>
-        {!weatherInfo ? (
+        {weatherInfo ? (
           <Skeleton className="ml-3" width={150} height={40} />
         ) : (
-          <Button size="medium">Learn More</Button>
+          <Button
+            onClick={() => handleDelete(id)}
+            size="medium"
+            variant="outlined"
+            endIcon={<ClearIcon />}
+          >
+            Delete{" "}
+          </Button>
         )}
       </CardActions>
       <Divider />

@@ -6,15 +6,30 @@ import "@fontsource/ibm-plex-mono/700.css";
 import CityCard from "./components/CityCard";
 import DarkMode from "./components/DarkMode";
 import CardList from "./components/CardList";
-
+import SearchForm from "./components/SearchForm";
+import { useMainContext } from "./context/MainContext";
+import { useEffect } from "react";
+import "./utils/api";
 const App = () => {
+  const { cityList, setCityList } = useMainContext();
+
+  useEffect(() => {
+    chrome.storage.local.get("cityList", (res) => {
+      console.log(res.cityList);
+      setCityList(res.cityList);
+    });
+  }, []);
   return (
     <>
       <DarkMode />
-      <CardList>
-        <CityCard city="İzmir" />
-        <CityCard city="Ankara" />
-      </CardList>
+      <main className="max-h-[400px] min-w-[340px] overflow-auto">
+        <SearchForm />
+        <CardList>
+          {cityList?.map((city) => {
+            return <CityCard key={city.id} info={city} />;
+          })}
+        </CardList>
+      </main>
     </>
   );
 };
