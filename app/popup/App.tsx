@@ -5,12 +5,16 @@ import "@fontsource/ibm-plex-mono/600.css";
 import "@fontsource/ibm-plex-mono/700.css";
 import CityCard from "./components/CityCard";
 import DarkMode from "./components/DarkMode";
+import CardList from "./components/CardList";
 
 const App = () => {
   return (
     <>
       <DarkMode />
-      <CityCard city="Istanbul" />
+      <CardList>
+        <CityCard city="İzmir" />
+        <CityCard city="Ankara" />
+      </CardList>
     </>
   );
 };
