@@ -17,6 +17,7 @@ type Props = {
 const CityCard: React.FC<Props> = ({ info }) => {
   const { loading, cityList, setCityList } = useMainContext();
   const { name, main, weather, id } = info;
+  console.log(info);
 
   const handleDelete = (id: number) => {
     if (cityList) {

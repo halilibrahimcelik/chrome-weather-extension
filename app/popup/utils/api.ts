@@ -36,10 +36,20 @@ export interface OpenweatherData {
   cod: number;
 }
 
-export type TempScale = "metric" | "imperial";
-export const fetchRequest = async (city: string): Promise<Response> => {
+export type TempScale = "metric" | "imperial" | undefined;
+
+export type StorageLocal = {
+  cityList: string[];
+  option: {
+    tempScale: TempScale;
+  };
+};
+export const fetchRequest = async (
+  city: string,
+  unit: string
+): Promise<Response> => {
   try {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=${unit}`;
     const response = await fetch(url);
 
     if (response.status >= 400 || !response.ok) {

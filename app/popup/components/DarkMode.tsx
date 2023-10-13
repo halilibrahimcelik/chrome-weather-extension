@@ -6,6 +6,8 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useMainContext } from "../context/MainContext";
 import { motion } from "framer-motion";
 import { FormControlLabel, Switch, styled } from "@mui/material";
+import React, { useEffect } from "react";
+import { OpenweatherData, fetchRequest } from "../utils/api";
 
 const MetricSwitch = styled(Switch)(({ theme }) => ({
   padding: 6,
@@ -58,9 +60,57 @@ const MetricSwitch = styled(Switch)(({ theme }) => ({
     margin: 2,
   },
 }));
+
 const DarkMode = () => {
   const theme = useTheme();
-  const { toggleColorMode } = useMainContext();
+  const {
+    toggleColorMode,
+    setUnit,
+    cityList,
+    unit,
+    setLoading,
+    setError,
+    setCityList,
+  } = useMainContext();
+  const handleUnitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.target.checked ? setUnit("metric") : setUnit("imperial");
+    const onlyCityNameArray = cityList?.map((city) => city.name);
+    console.log(onlyCityNameArray);
+    console.log(unit);
+    setCityList([]);
+    chrome.storage.local.set({ cityList: [] });
+    if (onlyCityNameArray) {
+      for (const cityName of onlyCityNameArray!) {
+        fetchRequest(cityName, unit!)
+          .then((res) => {
+            setLoading(true);
+            if (res.status === 404) throw new Error("City not found");
+            if (res.ok) {
+              setTimeout(() => {
+                setLoading(false);
+              }, 500);
+            }
+            return res.json();
+          })
+          .then((data: OpenweatherData) => {
+            setError(null);
+            setCityList((prev) => {
+              if (prev) {
+                return [...prev, data];
+              } else {
+                return [data];
+              }
+            });
+          })
+          .catch((err) => setError(err))
+          .finally(() => {
+            setTimeout(() => {
+              setLoading(false);
+            }, 500);
+          });
+      }
+    }
+  };
 
   return (
     <Box
@@ -82,7 +132,12 @@ const DarkMode = () => {
     >
       <div>
         <FormControlLabel
-          control={<MetricSwitch defaultChecked />}
+          control={
+            <MetricSwitch
+              onChange={(e) => handleUnitChange(e)}
+              defaultChecked
+            />
+          }
           label="Metric System"
           sx={{ fontWeight: 700 }}
         />

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { OpenweatherData } from "../utils/api";
+import { OpenweatherData, TempScale } from "../utils/api";
 type MainContextType = {
   toggleColorMode: () => void;
   cityList: OpenweatherData[] | undefined;
@@ -10,8 +10,10 @@ type MainContextType = {
   >;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setError: React.Dispatch<React.SetStateAction<string | null>>;
+  setUnit: React.Dispatch<React.SetStateAction<TempScale>>;
   loading: boolean;
   error: string | null;
+  unit: TempScale;
 };
 
 export const MainContext = React.createContext<MainContextType>({
@@ -20,8 +22,10 @@ export const MainContext = React.createContext<MainContextType>({
   setCityList: () => {},
   setLoading: () => {},
   setError: () => {},
+  setUnit: () => {},
   loading: false,
   error: "",
+  unit: "metric",
 });
 
 export const useMainContext = () => React.useContext(MainContext);
@@ -38,6 +42,7 @@ export default function MainContextProvider(props: {
     | undefined;
 }) {
   const [mode, setMode] = React.useState<"light" | "dark">();
+  const [unit, setUnit] = React.useState<TempScale>();
   const [cityList, setCityList] = React.useState<
     OpenweatherData[] | undefined
   >();
@@ -88,6 +93,7 @@ export default function MainContextProvider(props: {
     [mode]
   );
   //
+
   const contextValue = {
     toggleColorMode: colorMode.toggleColorMode,
     cityList,
@@ -96,6 +102,8 @@ export default function MainContextProvider(props: {
     setLoading,
     error,
     setError,
+    unit,
+    setUnit,
   };
   return (
     <MainContext.Provider value={contextValue}>
