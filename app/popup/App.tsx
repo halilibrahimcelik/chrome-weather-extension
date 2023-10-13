@@ -13,13 +13,13 @@ import "./utils/api";
 import { AnimatePresence } from "framer-motion";
 const App = () => {
   const { cityList, setCityList } = useMainContext();
-
   useEffect(() => {
     chrome.storage.local.get("cityList", (res) => {
       console.log(res.cityList);
       setCityList(res.cityList);
     });
   }, []);
+
   return (
     <>
       <DarkMode />

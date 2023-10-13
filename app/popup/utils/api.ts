@@ -35,6 +35,8 @@ export interface OpenweatherData {
   id: number;
   cod: number;
 }
+
+export type TempScale = "metric" | "imperial";
 export const fetchRequest = async (city: string): Promise<Response> => {
   try {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
