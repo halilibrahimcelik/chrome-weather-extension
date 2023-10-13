@@ -26,12 +26,10 @@ const SearchForm: React.FC<Props> = () => {
     fetchRequest(city, unit!)
       .then((res) => {
         setLoading(true);
-        console.log("loading..");
         if (res.status === 404) throw new Error("City not found");
-        console.log(res);
+
         if (res.ok) {
           setTimeout(() => {
-            console.log("done");
             setLoading(false);
           }, 500);
         }
