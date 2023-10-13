@@ -20,7 +20,7 @@ export const MainContext = React.createContext<MainContextType>({
   setCityList: () => {},
   setLoading: () => {},
   setError: () => {},
-  loading: true,
+  loading: false,
   error: "",
 });
 

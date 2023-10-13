@@ -35,7 +35,7 @@ export interface OpenweatherData {
   id: number;
   cod: number;
 }
-export const fetchRequest = async (city: string): Promise<OpenweatherData> => {
+export const fetchRequest = async (city: string): Promise<Response> => {
   try {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
     const response = await fetch(url);
@@ -43,9 +43,9 @@ export const fetchRequest = async (city: string): Promise<OpenweatherData> => {
     if (response.status >= 400 || !response.ok) {
       throw new Error("City is not found");
     }
-    const data: OpenweatherData = await response.json();
+    // const data: OpenweatherData = await response.json();
 
-    return data;
+    return response;
   } catch (error) {
     throw new Error(error as string);
   }

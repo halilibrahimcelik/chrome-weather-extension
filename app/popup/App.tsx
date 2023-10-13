@@ -10,6 +10,7 @@ import SearchForm from "./components/SearchForm";
 import { useMainContext } from "./context/MainContext";
 import { useEffect } from "react";
 import "./utils/api";
+import { AnimatePresence } from "framer-motion";
 const App = () => {
   const { cityList, setCityList } = useMainContext();
 
@@ -25,9 +26,11 @@ const App = () => {
       <main className="max-h-[400px] min-w-[340px] overflow-auto">
         <SearchForm />
         <CardList>
-          {cityList?.map((city) => {
-            return <CityCard key={city.id} info={city} />;
-          })}
+          <AnimatePresence>
+            {cityList?.map((city) => {
+              return <CityCard key={city.id} info={city} />;
+            })}
+          </AnimatePresence>
         </CardList>
       </main>
     </>

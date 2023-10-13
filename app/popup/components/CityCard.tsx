@@ -17,7 +17,7 @@ type Props = {
 const CityCard: React.FC<Props> = ({ info }) => {
   const { loading, cityList, setCityList } = useMainContext();
   const { name, main, weather, id } = info;
-  const weatherInfo = loading;
+
   const handleDelete = (id: number) => {
     if (cityList) {
       const newCityList = cityList.filter((city) => city.id !== id);
@@ -31,6 +31,7 @@ const CityCard: React.FC<Props> = ({ info }) => {
     <Card
       component={motion.li}
       initial={{ scale: 0.5, opacity: 0, y: -100 }}
+      viewport={{ once: true, amount: 0.5 }}
       whileInView={{ scale: 1, opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: "easeIn", staggerChildren: 0.4 }}
       exit={{ scale: 0.5, opacity: 0, y: -100 }}
@@ -40,7 +41,7 @@ const CityCard: React.FC<Props> = ({ info }) => {
         <Grid container justifyContent={"space-between"} alignItems={"center"}>
           <Grid item xs={6}>
             <Typography variant="h4" sx={{ color: "primary.main" }}>
-              {weatherInfo ? <Skeleton /> : name}
+              {loading ? <Skeleton /> : name}
             </Typography>
           </Grid>
           <Grid
@@ -50,7 +51,7 @@ const CityCard: React.FC<Props> = ({ info }) => {
             justifyContent={"flex-end"}
           >
             <Typography variant="h6" sx={{ color: "primary.main" }}>
-              {weatherInfo ? <Skeleton width={100} /> : `${main.temp}°C`}
+              {loading ? <Skeleton width={100} /> : `${main.temp}°C`}
             </Typography>
           </Grid>
         </Grid>
@@ -71,21 +72,21 @@ const CityCard: React.FC<Props> = ({ info }) => {
               component={"span"}
               sx={{ color: "text.primary", fontSize: 13 }}
             >
-              {weatherInfo ? (
+              {loading ? (
                 <Skeleton width={150} height={30} />
               ) : (
                 ` Feels Like ${main.feels_like}°C`
               )}
             </Typography>
             <Typography component={"span"} sx={{ color: "text.primary" }}>
-              {weatherInfo ? (
+              {loading ? (
                 <Skeleton width={150} height={30} />
               ) : (
                 ` Max ${main.temp_max}°C`
               )}
             </Typography>
             <Typography component={"span"} sx={{ color: "text.primary" }}>
-              {weatherInfo ? (
+              {loading ? (
                 <Skeleton width={150} height={30} />
               ) : (
                 ` Min ${main.temp_min}°C`
@@ -93,7 +94,7 @@ const CityCard: React.FC<Props> = ({ info }) => {
             </Typography>
           </Grid>
           <Grid item xs={4}>
-            {weatherInfo ? (
+            {loading ? (
               <Skeleton width={100} height={100} variant="circular" />
             ) : (
               <img
@@ -107,7 +108,7 @@ const CityCard: React.FC<Props> = ({ info }) => {
         </Grid>
       </CardContent>
       <CardActions>
-        {weatherInfo ? (
+        {loading ? (
           <Skeleton className="ml-3" width={150} height={40} />
         ) : (
           <Button
