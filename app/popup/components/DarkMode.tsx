@@ -156,7 +156,7 @@ const DarkMode = () => {
               inputProps={{ "aria-label": "controlled" }}
             />
           }
-          label="Metric System"
+          label={checked ? "Metric System" : "Imperial System"}
           sx={{ fontWeight: 700 }}
         />
       </div>

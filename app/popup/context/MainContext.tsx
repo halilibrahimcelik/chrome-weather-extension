@@ -11,9 +11,11 @@ type MainContextType = {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setError: React.Dispatch<React.SetStateAction<string | null>>;
   setUnit: React.Dispatch<React.SetStateAction<TempScale>>;
+  setHomeCity: React.Dispatch<React.SetStateAction<string>>;
   loading: boolean;
   error: string | null;
   unit: TempScale;
+  homeCity: string | null;
 };
 
 export const MainContext = React.createContext<MainContextType>({
@@ -23,9 +25,11 @@ export const MainContext = React.createContext<MainContextType>({
   setLoading: () => {},
   setError: () => {},
   setUnit: () => {},
+  setHomeCity: () => {},
   loading: false,
   error: "",
   unit: "metric",
+  homeCity: "",
 });
 
 export const useMainContext = () => React.useContext(MainContext);
@@ -48,6 +52,7 @@ export default function MainContextProvider(props: {
   >();
   const [error, setError] = React.useState<string | null>("");
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [homeCity, setHomeCity] = React.useState<string>("");
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
@@ -104,6 +109,8 @@ export default function MainContextProvider(props: {
     setError,
     unit,
     setUnit,
+    homeCity,
+    setHomeCity,
   };
   return (
     <MainContext.Provider value={contextValue}>

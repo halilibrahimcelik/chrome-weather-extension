@@ -11,13 +11,18 @@ import { useMainContext } from "./context/MainContext";
 import { useEffect } from "react";
 import "./utils/api";
 import { AnimatePresence } from "framer-motion";
+import { LocalStorage } from "../background";
 const App = () => {
-  const { cityList, setCityList, setUnit } = useMainContext();
+  const { cityList, setCityList, setUnit, homeCity } = useMainContext();
   useEffect(() => {
-    chrome.storage.local.get(["cityList", "tempScale"], (res) => {
-      setCityList(res.cityList);
-      setUnit(res.tempScale);
-    });
+    chrome.storage.local.get(
+      ["cityList", "tempScale", "unit", "homeCity"],
+      (res) => {
+        console.log(res);
+        setCityList(res.cityList);
+        setUnit(res.tempScale);
+      }
+    );
   }, []);
 
   return (
@@ -27,6 +32,7 @@ const App = () => {
         <SearchForm />
         <CardList>
           <AnimatePresence>
+            {/* {homeCity && <CityCard info={homeCity} />} */}
             {cityList?.map((city) => {
               return <CityCard key={city.id} info={city} />;
             })}
