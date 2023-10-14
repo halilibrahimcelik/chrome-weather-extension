@@ -63,6 +63,8 @@ const MetricSwitch = styled(Switch)(({ theme }) => ({
 
 const DarkMode = () => {
   const theme = useTheme();
+  const [checked, setChecked] = React.useState(true);
+
   const {
     toggleColorMode,
     setUnit,
@@ -74,13 +76,27 @@ const DarkMode = () => {
   } = useMainContext();
   const handleUnitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.target.checked ? setUnit("metric") : setUnit("imperial");
+
+    setChecked(e.target.checked);
+    const newTempScale = e.target.checked ? "metric" : "imperial";
+    chrome.storage.local.set({ tempScale: newTempScale }, () => {
+      setChecked(e.target.checked);
+    });
   };
   useEffect(() => {
     const onlyCityNameArray = cityList?.map((city) => city.name);
     console.log(onlyCityNameArray);
-    console.log(unit);
-    setCityList([]);
-    chrome.storage.local.set({ cityList: [] });
+    if (onlyCityNameArray && onlyCityNameArray.length > 0) {
+      chrome.storage.local.set({ cityList: [] });
+      setCityList([]);
+    }
+
+    chrome.storage.local.get("tempScale", (res) => {
+      setUnit(res.tempScale);
+      if (res.tempScale === "metric") setChecked(true);
+      else setChecked(false);
+    });
+
     if (onlyCityNameArray) {
       for (const cityName of onlyCityNameArray!) {
         fetchRequest(cityName, unit === undefined ? "imperial" : unit)
@@ -135,8 +151,9 @@ const DarkMode = () => {
         <FormControlLabel
           control={
             <MetricSwitch
-              onChange={(e) => handleUnitChange(e)}
-              defaultChecked
+              onChange={handleUnitChange}
+              checked={checked}
+              inputProps={{ "aria-label": "controlled" }}
             />
           }
           label="Metric System"
