@@ -1,5 +1,3 @@
-import { useMainContext } from "../context/MainContext";
-
 export const API_KEY = import.meta.env.VITE_WHEATHER_API_KEY as string;
 
 export interface OpenweatherData {

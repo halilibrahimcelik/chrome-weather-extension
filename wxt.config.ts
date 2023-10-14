@@ -5,9 +5,9 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   manifest: {
     permissions: ["contextMenus", "storage"],
-    name: "Wheather Extension",
+    name: "Wheather Extension App",
     version: "0.0.1",
-    description: "Wheather Extension",
+    description: "Wheather Extension app",
   },
 
   entrypointsDir: "app",
