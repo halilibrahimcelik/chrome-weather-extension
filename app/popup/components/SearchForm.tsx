@@ -22,7 +22,7 @@ const SearchForm: React.FC<Props> = () => {
         return;
       }
     }
-
+    console.log(unit);
     fetchRequest(city, unit!)
       .then((res) => {
         setLoading(true);

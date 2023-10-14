@@ -74,6 +74,8 @@ const DarkMode = () => {
   } = useMainContext();
   const handleUnitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.target.checked ? setUnit("metric") : setUnit("imperial");
+  };
+  useEffect(() => {
     const onlyCityNameArray = cityList?.map((city) => city.name);
     console.log(onlyCityNameArray);
     console.log(unit);
@@ -81,7 +83,7 @@ const DarkMode = () => {
     chrome.storage.local.set({ cityList: [] });
     if (onlyCityNameArray) {
       for (const cityName of onlyCityNameArray!) {
-        fetchRequest(cityName, unit!)
+        fetchRequest(cityName, unit === undefined ? "imperial" : unit)
           .then((res) => {
             setLoading(true);
             if (res.status === 404) throw new Error("City not found");
@@ -110,8 +112,7 @@ const DarkMode = () => {
           });
       }
     }
-  };
-
+  }, [unit]);
   return (
     <Box
       component={motion.div}

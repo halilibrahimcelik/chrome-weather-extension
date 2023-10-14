@@ -6,12 +6,15 @@ export default defineBackground(() => {
       contexts: ["all"],
     });
   });
-  chrome.storage.local.get(["theme", "cityList"], (res) => {
+  chrome.storage.local.get(["theme", "cityList", "tempScale"], (res) => {
     chrome.storage.local.set({
       theme: "theme" in res ? res.theme : "light",
     });
     chrome.storage.local.set({
       cityList: "cityList" in res ? res.cityList : [],
+    });
+    chrome.storage.local.set({
+      tempScale: "tempScale" in res ? res.tempScale : "metric",
     });
   });
 });
