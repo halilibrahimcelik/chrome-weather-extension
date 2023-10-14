@@ -15,7 +15,7 @@ type Props = {
   info: OpenweatherData;
 };
 const CityCard: React.FC<Props> = ({ info }) => {
-  const { loading, cityList, setCityList } = useMainContext();
+  const { loading, cityList, setCityList, unit } = useMainContext();
   const { name, main, weather, id } = info;
 
   const handleDelete = (id: number) => {
@@ -51,7 +51,11 @@ const CityCard: React.FC<Props> = ({ info }) => {
             justifyContent={"flex-end"}
           >
             <Typography variant="h6" sx={{ color: "primary.main" }}>
-              {loading ? <Skeleton width={100} /> : `${main.temp}°C`}
+              {loading ? (
+                <Skeleton width={100} />
+              ) : (
+                `${main.temp} ${unit === "metric" ? "°C" : "°F"}`
+              )}
             </Typography>
           </Grid>
         </Grid>
@@ -75,21 +79,23 @@ const CityCard: React.FC<Props> = ({ info }) => {
               {loading ? (
                 <Skeleton width={150} height={30} />
               ) : (
-                ` Feels Like ${main.feels_like}°C`
+                ` Feels Like ${main.feels_like}${
+                  unit === "metric" ? "°C" : "°F"
+                }`
               )}
             </Typography>
             <Typography component={"span"} sx={{ color: "text.primary" }}>
               {loading ? (
                 <Skeleton width={150} height={30} />
               ) : (
-                ` Max ${main.temp_max}°C`
+                ` Max ${main.temp_max}${unit === "metric" ? "°C" : "°F"}`
               )}
             </Typography>
             <Typography component={"span"} sx={{ color: "text.primary" }}>
               {loading ? (
                 <Skeleton width={150} height={30} />
               ) : (
-                ` Min ${main.temp_min}°C`
+                ` Min ${main.temp_min}${unit === "metric" ? "°C" : "°F"}`
               )}
             </Typography>
           </Grid>

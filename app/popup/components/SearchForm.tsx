@@ -7,7 +7,7 @@ type Props = {};
 
 const SearchForm: React.FC<Props> = () => {
   const searchValue = useRef<HTMLInputElement>(null);
-  const { setCityList, setError, error, cityList, setLoading } =
+  const { setCityList, setError, error, cityList, setLoading, unit } =
     useMainContext();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,16 +22,13 @@ const SearchForm: React.FC<Props> = () => {
         return;
       }
     }
-
-    fetchRequest(city)
+    fetchRequest(city, unit!)
       .then((res) => {
         setLoading(true);
-        console.log("loading..");
         if (res.status === 404) throw new Error("City not found");
-        console.log(res);
+
         if (res.ok) {
           setTimeout(() => {
-            console.log("done");
             setLoading(false);
           }, 500);
         }
