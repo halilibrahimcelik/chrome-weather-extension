@@ -31,8 +31,8 @@ const App = () => {
         <SearchForm />
         <CardList>
           <AnimatePresence>
-            {cityList?.map((city) => {
-              return <CityCard key={city.id} info={city} />;
+            {cityList?.map((city, index) => {
+              return <CityCard key={city.id} index={index} info={city} />;
             })}
           </AnimatePresence>
         </CardList>

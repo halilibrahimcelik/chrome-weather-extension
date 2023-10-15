@@ -13,8 +13,9 @@ import { useMainContext } from "../context/MainContext";
 
 type Props = {
   info: OpenweatherData;
+  index: number;
 };
-const CityCard: React.FC<Props> = ({ info }) => {
+const CityCard: React.FC<Props> = ({ info, index }) => {
   const { loading, cityList, setCityList, unit } = useMainContext();
   const { name, main, weather, id } = info;
 
@@ -113,20 +114,22 @@ const CityCard: React.FC<Props> = ({ info }) => {
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions>
-        {loading ? (
-          <Skeleton className="ml-3" width={150} height={40} />
-        ) : (
-          <Button
-            onClick={() => handleDelete(id)}
-            size="medium"
-            variant="outlined"
-            endIcon={<ClearIcon />}
-          >
-            Delete{" "}
-          </Button>
-        )}
-      </CardActions>
+      {index !== 0 && (
+        <CardActions>
+          {loading ? (
+            <Skeleton className="ml-3" width={150} height={40} />
+          ) : (
+            <Button
+              onClick={() => handleDelete(id)}
+              size="medium"
+              variant="outlined"
+              endIcon={<ClearIcon />}
+            >
+              Delete{" "}
+            </Button>
+          )}
+        </CardActions>
+      )}
       <Divider />
     </Card>
   );
