@@ -23,15 +23,6 @@ export default defineBackground(() => {
   chrome.storage.local.get(
     ["theme", "cityList", "tempScale"],
     (res: LocalStorage) => {
-      if (res.cityList) {
-        const homecityTemp = Math.round(res.cityList[0].main.temp);
-        const homecityUnit = res.tempScale === "metric" ? "°C" : "°F";
-
-        chrome.action.setBadgeText({
-          text: `${homecityTemp.toString()} ${homecityUnit?.toString()}`,
-        });
-      }
-
       chrome.storage.local.set({
         theme: "theme" in res ? res.theme : "light",
       });
