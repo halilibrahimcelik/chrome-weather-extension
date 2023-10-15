@@ -8,6 +8,7 @@ export interface LocalStorage {
     name: string;
     cityInfo: OpenweatherData;
   };
+  popup?: boolean;
   [key: string]: any;
 }
 
@@ -33,6 +34,9 @@ export default defineBackground(() => {
       });
       chrome.storage.local.set({
         homeCity: "homeCity" in res ? res.homeCity?.name : "",
+      });
+      chrome.storage.local.set({
+        popup: "popup" in res ? res.popup : false,
       });
     }
   );

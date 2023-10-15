@@ -16,6 +16,8 @@ type MainContextType = {
   error: string | null;
   unit: TempScale;
   homeCity: string | null;
+  popup: boolean;
+  setPopup: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const MainContext = React.createContext<MainContextType>({
@@ -30,6 +32,8 @@ export const MainContext = React.createContext<MainContextType>({
   error: "",
   unit: "metric",
   homeCity: "",
+  popup: false,
+  setPopup: () => {},
 });
 
 export const useMainContext = () => React.useContext(MainContext);
@@ -47,6 +51,7 @@ export default function MainContextProvider(props: {
 }) {
   const [mode, setMode] = React.useState<"light" | "dark">();
   const [unit, setUnit] = React.useState<TempScale>();
+  const [popup, setPopup] = React.useState<boolean>(false);
   const [cityList, setCityList] = React.useState<
     OpenweatherData[] | undefined
   >();
@@ -111,6 +116,8 @@ export default function MainContextProvider(props: {
     setUnit,
     homeCity,
     setHomeCity,
+    setPopup,
+    popup,
   };
   return (
     <MainContext.Provider value={contextValue}>

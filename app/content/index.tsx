@@ -7,26 +7,34 @@ import MainContextProvider, {
 import CityCard from "../popup/components/CityCard";
 import Box from "@mui/material/Box";
 import { motion } from "framer-motion";
+import HideSourceIcon from "@mui/icons-material/HideSource";
 export default defineContentScript({
   // Set manifest options
   matches: ["<all_urls>"],
 
   main(ctx) {
     // Executed when content script is loaded
-    console.log("Content scripsst loaded!");
+
     const root = document.createElement("div");
 
     const App: React.FC<{}> = () => {
-      const { cityList, setCityList } = useMainContext();
+      const { cityList, setCityList, setUnit, setPopup, popup } =
+        useMainContext();
       const constrainRef = useRef(null);
 
       useEffect(() => {
-        chrome.storage.local.get(["cityList"], (res) => {
+        chrome.storage.local.get(["cityList", "tempScale", "popup"], (res) => {
           setCityList(res.cityList);
+          setUnit(res.tempScale);
+          setPopup(res.popup);
         });
       }, []);
-      console.log(cityList?.length);
-      if (cityList && cityList.length > 0)
+      console.log(popup);
+      const handlePopup = () => {
+        setPopup(false);
+        chrome.storage.local.set({ popup: false });
+      };
+      if (cityList && cityList.length > 0 && popup)
         return (
           <>
             <motion.div
@@ -42,18 +50,29 @@ export default defineContentScript({
                 ease: "easeIn",
                 staggerChildren: 0.4,
               }}
+              className="group"
               dragConstraints={constrainRef}
               drag
               sx={{
                 listStyle: "none",
-                width: "200px",
+                width: "auto",
                 position: "fixed",
                 top: "15%",
                 left: "0%",
                 cursor: "grab",
               }}
             >
-              <CityCard index={0} info={cityList[0]} />{" "}
+              <div className="relative">
+                <Box
+                  component={"span"}
+                  sx={{ color: "text.primary" }}
+                  onClick={handlePopup}
+                  className="opacity-0 h-0  cursor-pointer z-10  transition-all duration-300 ease-in  group-hover:opacity-100 group-hover:h-auto absolute right-2 top-3"
+                >
+                  <HideSourceIcon titleAccess="Hide" />
+                </Box>
+                <CityCard index={0} info={cityList[0]} />{" "}
+              </div>
             </Box>
           </>
         );

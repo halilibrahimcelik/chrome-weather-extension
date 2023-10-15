@@ -13,6 +13,7 @@ import { TransitionProps } from "@mui/material/transitions";
 
 import CityForm from "./components/CityForm";
 import React from "react";
+import PopupToggle from "./components/PopupToggle";
 type Props = {};
 
 function App({}: Props) {
@@ -74,6 +75,10 @@ function App({}: Props) {
               </Typography>
             </CardContent>
             <CityForm setOpen={setOpen} />
+          </Card>
+          <Divider />
+          <Card className="container  px-4  py-2" sx={{ borderRadius: 0 }}>
+            <PopupToggle />
           </Card>
         </Grid>
       </Grid>
