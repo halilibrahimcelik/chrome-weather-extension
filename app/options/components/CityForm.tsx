@@ -6,9 +6,22 @@ import InputLabel from "@mui/material/InputLabel";
 import { useMainContext } from "@/app/popup/context/MainContext";
 import { useRef, useState, useEffect } from "react";
 import { OpenweatherData, fetchRequest } from "@/app/popup/utils/api";
-type Props = {};
+import { TransitionProps } from "@mui/material/transitions";
+import Slide from "@mui/material/Slide";
+type Props = {
+  setOpen: React.Dispatch<
+    React.SetStateAction<{
+      open: boolean;
+      Transition: React.ComponentType<
+        TransitionProps & {
+          children: React.ReactElement<any, any>;
+        }
+      >;
+    }>
+  >;
+};
 
-const CityForm = (props: Props) => {
+const CityForm = ({ setOpen }: Props) => {
   const { setError, cityList, setCityList } = useMainContext();
 
   const cityRef = useRef<HTMLInputElement>(null);
@@ -22,6 +35,7 @@ const CityForm = (props: Props) => {
 
     fetchRequest(city, unit)
       .then((res) => {
+        if (res.ok) setOpen({ open: true, Transition: Slide });
         return res.json();
       })
       .then((data: OpenweatherData) => {
@@ -49,14 +63,6 @@ const CityForm = (props: Props) => {
           }
           chrome.storage.local.set({ tempScale: unit });
         });
-        // chrome.storage.local.set({
-        //   homeCity: {
-        //     name: data.name,
-        //     cityInfo: data,
-        //   },
-        //   unit: unit,
-        //   cityList: [data, ...cityList!.slice(1)],
-        // });
       })
       .catch((err) => setError(err));
   };

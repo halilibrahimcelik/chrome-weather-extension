@@ -11,7 +11,6 @@ import { useMainContext } from "./context/MainContext";
 import { useEffect } from "react";
 import "./utils/api";
 import { AnimatePresence } from "framer-motion";
-import { LocalStorage } from "../background";
 const App = () => {
   const { cityList, setCityList, setUnit, homeCity } = useMainContext();
   useEffect(() => {
@@ -32,7 +31,6 @@ const App = () => {
         <SearchForm />
         <CardList>
           <AnimatePresence>
-            {/* {homeCity && <CityCard info={homeCity} />} */}
             {cityList?.map((city) => {
               return <CityCard key={city.id} info={city} />;
             })}
