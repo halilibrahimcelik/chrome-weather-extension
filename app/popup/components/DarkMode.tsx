@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { FormControlLabel, Switch, styled } from "@mui/material";
 import React, { useEffect } from "react";
 import { OpenweatherData, fetchRequest } from "../utils/api";
-
+import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 const MetricSwitch = styled(Switch)(({ theme }) => ({
   padding: 6,
   color: theme.palette.mode === "dark" ? "#000000" : "#f7fff7",
@@ -137,14 +137,15 @@ const DarkMode = () => {
       transition={{ duration: 0.4, ease: "easeIn" }}
       sx={{
         display: "flex",
+        flexWrap: "wrap",
         width: "100%",
         alignItems: "center",
         justifyContent: "space-between",
         bgcolor: "background.default",
         color: "text.primary",
         borderRadius: 0,
-        py: 2,
-        px: 1,
+        pt: 2,
+        px: 2,
       }}
     >
       <div>
@@ -156,15 +157,26 @@ const DarkMode = () => {
               inputProps={{ "aria-label": "controlled" }}
             />
           }
-          label={checked ? "Metric System" : "Imperial System"}
+          label={checked ? "Metric" : "Imperial"}
           sx={{ fontWeight: 700 }}
         />
       </div>
-
-      <div>
+      <div className=" flex items-end gap-2 ">
+        <span>Options</span>
+        <SettingsSuggestIcon
+          titleAccess="Options"
+          sx={{ cursor: "pointer" }}
+          onClick={() => chrome.runtime.openOptionsPage()}
+        />
+      </div>
+      <div className="flex items-end justify-end">
         <span className="capitalize"> {theme.palette.mode} </span>
 
-        <IconButton sx={{ ml: 1 }} onClick={toggleColorMode} color="inherit">
+        <IconButton
+          sx={{ ml: 1, p: 0 }}
+          onClick={toggleColorMode}
+          color="inherit"
+        >
           {theme.palette.mode === "dark" ? (
             <Brightness7Icon titleAccess="Ligth Mode" />
           ) : (
