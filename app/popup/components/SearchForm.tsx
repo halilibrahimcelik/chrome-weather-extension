@@ -3,6 +3,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import { OpenweatherData, fetchRequest } from "../utils/api";
 import { useRef } from "react";
 import { useMainContext } from "../context/MainContext";
+import PictureInPictureIcon from "@mui/icons-material/PictureInPicture";
+import { motion } from "framer-motion";
+import { Messages } from "../utils/messages";
 type Props = {};
 
 const SearchForm: React.FC<Props> = () => {
@@ -51,9 +54,27 @@ const SearchForm: React.FC<Props> = () => {
         }, 500);
       });
   };
+
+  const handleOverlay = () => {
+    console.log("overlay");
+    chrome.tabs.query(
+      {
+        active: true,
+      },
+      (tabs) => {
+        console.log(tabs);
+        if (tabs.length > 0) {
+          chrome.tabs.sendMessage(tabs[0].id!, Messages.TOGGLE_OVERLAY);
+        }
+      }
+    );
+  };
   return (
     <Box
-      component={"form"}
+      component={motion.form}
+      initial={{ opacity: 0, y: -200 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: "easeIn" }}
       onSubmit={handleSubmit}
       sx={{
         "& .MuiTextField-root": {
@@ -77,14 +98,26 @@ const SearchForm: React.FC<Props> = () => {
         error={error ? true : false}
         helperText={error ? `${error} ` : " "}
       />
-      <Button
-        type="submit"
-        sx={{ width: "fit-content", alignSelf: "flex-end" }}
-        variant="outlined"
-        endIcon={<SearchIcon />}
-      >
-        Search
-      </Button>{" "}
+      <div className="flex justify-between items-center">
+        <Button title="Overlay Popup" onClick={handleOverlay}>
+          <PictureInPictureIcon
+            color="primary"
+            className="cursor-pointer"
+            sx={{
+              transition: "opacity 0.4s ease-in",
+              "&:hover": { opacity: "0.5" },
+            }}
+          />
+        </Button>
+        <Button
+          type="submit"
+          sx={{ width: "fit-content", alignSelf: "flex-end" }}
+          variant="outlined"
+          endIcon={<SearchIcon />}
+        >
+          Search
+        </Button>{" "}
+      </div>
     </Box>
   );
 };

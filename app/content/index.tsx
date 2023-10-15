@@ -8,6 +8,7 @@ import CityCard from "../popup/components/CityCard";
 import Box from "@mui/material/Box";
 import { motion } from "framer-motion";
 import HideSourceIcon from "@mui/icons-material/HideSource";
+import { Messages } from "../popup/utils/messages";
 export default defineContentScript({
   // Set manifest options
   matches: ["<all_urls>"],
@@ -29,7 +30,18 @@ export default defineContentScript({
           setPopup(res.popup);
         });
       }, []);
-      console.log(popup);
+      useEffect(() => {
+        chrome.runtime.onMessage.addListener((message) => {
+          console.log(message, "message");
+
+          if (message === Messages.TOGGLE_OVERLAY) {
+            console.log("hey");
+            setPopup(!popup);
+
+            chrome.storage.local.set({ popup: !popup });
+          }
+        });
+      }, [popup]);
       const handlePopup = () => {
         setPopup(false);
         chrome.storage.local.set({ popup: false });
