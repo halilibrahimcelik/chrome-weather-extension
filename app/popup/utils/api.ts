@@ -57,6 +57,12 @@ export const fetchRequest = async (
 
     return response;
   } catch (error) {
+    chrome.notifications.create("notfoundcity", {
+      type: "basic",
+      iconUrl: "https://img.icons8.com/emoji/48/warning-emoji.png",
+      title: "Warning",
+      message: "City not found please try a valid city name",
+    });
     throw new Error(error as string);
   }
 };

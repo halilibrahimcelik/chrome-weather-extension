@@ -37,6 +37,7 @@ const CityCard: React.FC<Props> = ({ info, index }) => {
       transition={{ duration: 0.3, ease: "easeIn", staggerChildren: 0.4 }}
       exit={{ scale: 0.5, opacity: 0, y: -100 }}
       sx={{ minWidth: 340, borderRadius: 0 }}
+      className={`${index === 0 && "pt-4"}`}
     >
       <CardContent>
         <Grid container justifyContent={"space-between"} alignItems={"center"}>
