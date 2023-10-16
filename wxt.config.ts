@@ -8,6 +8,8 @@ export default defineConfig({
     name: "Wheather Extension App",
     version: "0.0.1",
     description: "Wheather Extension app",
+    short_name: "WheatherSearch",
+    author: "Halil İbrahim Celik",
   },
 
   entrypointsDir: "app",
