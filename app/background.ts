@@ -16,7 +16,7 @@ export default defineBackground(() => {
   chrome.runtime.onInstalled.addListener(() => {
     chrome.contextMenus.create({
       id: "cityName",
-      title: "Add this city to wheather Card",
+      title: "Add to WeatherNow+",
       contexts: ["all"],
     });
   });
