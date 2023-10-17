@@ -11,8 +11,9 @@ WeatherNow+ is your go-to Chrome extension for quick and accurate weather update
 3. **Popup for Detailed Information:** Get comprehensive weather details by clicking on the extension icon to open a popup window. This includes information like temperature, humidity, wind speed, and more. Stay informed with just a single click.
 
 4. **Temperature Unit Options:** Choose between metric or imperial units based on your preference. WeatherNow+ caters to users worldwide, allowing you to view temperature in Celsius or Fahrenheit.
-
-5. **User-Friendly Interface:** WeatherNow+ is designed with simplicity in mind. The clean layout and intuitive controls make it easy for users of all levels to navigate and access the information they need.
+   
+5. **Add City with  right click!"" You can add a city of your choose wihtout opening the exention. All you have to do is to select text field and right  click. You will see weather extension option.
+6. **User-Friendly Interface:** WeatherNow+ is designed with simplicity in mind. The clean layout and intuitive controls make it easy for users of all levels to navigate and access the information they need.
 
 ## How to Use
 
