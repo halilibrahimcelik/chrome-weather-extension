@@ -1,7 +1,7 @@
 import { Box, Button, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { OpenweatherData, fetchRequest } from "../utils/api";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useMainContext } from "../context/MainContext";
 import PictureInPictureIcon from "@mui/icons-material/PictureInPicture";
 import { motion } from "framer-motion";
@@ -12,6 +12,7 @@ const SearchForm: React.FC<Props> = () => {
   const searchValue = useRef<HTMLInputElement>(null);
   const { setCityList, setError, error, cityList, setLoading, unit } =
     useMainContext();
+  let newArr = [];
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const city = searchValue.current?.value as string;
@@ -56,19 +57,20 @@ const SearchForm: React.FC<Props> = () => {
   };
 
   const handleOverlay = () => {
-    console.log("overlay");
+    chrome.storage.local.set({ cityList });
+
     chrome.tabs.query(
       {
         active: true,
       },
       (tabs) => {
-        console.log(tabs);
         if (tabs.length > 0) {
           chrome.tabs.sendMessage(tabs[0].id!, Messages.TOGGLE_OVERLAY);
         }
       }
     );
   };
+
   return (
     <Box
       component={motion.form}

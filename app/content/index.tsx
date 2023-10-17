@@ -25,17 +25,14 @@ export default defineContentScript({
 
       useEffect(() => {
         chrome.storage.local.get(["cityList", "tempScale", "popup"], (res) => {
-          setCityList(res.cityList);
           setUnit(res.tempScale);
+          setCityList(res.cityList);
           setPopup(res.popup);
         });
-      }, []);
+      }, [popup]);
       useEffect(() => {
         chrome.runtime.onMessage.addListener((message) => {
-          console.log(message, "message");
-
           if (message === Messages.TOGGLE_OVERLAY) {
-            console.log("hey");
             setPopup(!popup);
 
             chrome.storage.local.set({ popup: !popup });
@@ -46,6 +43,7 @@ export default defineContentScript({
         setPopup(false);
         chrome.storage.local.set({ popup: false });
       };
+      console.log(cityList, popup, "cityList");
       if (cityList && cityList.length > 0 && popup)
         return (
           <>

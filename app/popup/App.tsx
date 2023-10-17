@@ -20,12 +20,14 @@ const App = () => {
         console.log(res);
         setCityList(res.cityList);
         setUnit(res.tempScale);
-        if (res.cityList) {
-          const homecityTemp = Math.round(res.cityList[0].main.temp);
+        if (res.cityList && res.cityList.length > 0) {
+          const homecityTemp =
+            res.cityList[0]?.main?.temp &&
+            Math.round(res.cityList[0]?.main?.temp);
           const homecityUnit = res.tempScale === "metric" ? "°C" : "°F";
 
           chrome.action.setBadgeText({
-            text: `${homecityTemp.toString()} ${homecityUnit?.toString()}`,
+            text: `${homecityTemp?.toString()} ${homecityUnit?.toString()}`,
           });
         }
       }

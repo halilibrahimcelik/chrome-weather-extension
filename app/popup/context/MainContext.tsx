@@ -67,7 +67,7 @@ export default function MainContextProvider(props: {
     []
   );
   chrome.storage.local.set({ theme: mode });
-  chrome.storage.local.set({ cityList });
+  // chrome.storage.local.set({ cityList });
   React.useEffect(() => {
     chrome.storage.local.get("theme", (data) => {
       setMode(data.theme);
