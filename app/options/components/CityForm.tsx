@@ -31,7 +31,6 @@ const CityForm = ({ setOpen }: Props) => {
     e.preventDefault();
     const city = cityRef.current?.value as string;
     const unit = unitRef.current?.value as string;
-    console.log(city, unit);
 
     fetchRequest(city, unit)
       .then((res) => {

@@ -43,7 +43,6 @@ export default defineContentScript({
         setPopup(false);
         chrome.storage.local.set({ popup: false });
       };
-      console.log(cityList, popup, "cityList");
       if (cityList && cityList.length > 0 && popup)
         return (
           <>

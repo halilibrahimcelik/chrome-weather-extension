@@ -85,7 +85,6 @@ const DarkMode = () => {
   };
   useEffect(() => {
     const onlyCityNameArray = cityList?.map((city) => city.name);
-    console.log(onlyCityNameArray);
     if (onlyCityNameArray && onlyCityNameArray.length > 0) {
       chrome.storage.local.set({ cityList: [] });
       setCityList([]);

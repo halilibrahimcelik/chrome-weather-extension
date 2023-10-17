@@ -17,7 +17,6 @@ const App = () => {
     chrome.storage.local.get(
       ["cityList", "tempScale", "unit", "homeCity"],
       (res) => {
-        console.log(res);
         setCityList(res.cityList);
         setUnit(res.tempScale);
         if (res.cityList && res.cityList.length > 0) {

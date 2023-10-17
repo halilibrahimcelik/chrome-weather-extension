@@ -15,7 +15,6 @@ function PopupToggle({}: Props) {
   };
   useEffect(() => {
     chrome.storage.local.get(["popup"], (res) => {
-      console.log(res.popup);
       setPopup(res.popup);
     });
   }, []);
