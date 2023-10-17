@@ -9,14 +9,12 @@ type Props = {};
 
 function PopupToggle({}: Props) {
   const { popup, setPopup } = useMainContext();
-  console.log(popup);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPopup(e.target.checked);
     chrome.storage.local.set({ popup: e.target.checked });
   };
   useEffect(() => {
     chrome.storage.local.get(["popup"], (res) => {
-      console.log(res.popup);
       setPopup(res.popup);
     });
   }, []);
@@ -36,7 +34,7 @@ function PopupToggle({}: Props) {
           />
         </FormGroup>
       </Grid>
-      <Grid xs={12}>
+      <Grid item xs={12}>
         <Typography
           variant="body2"
           component={"p"}

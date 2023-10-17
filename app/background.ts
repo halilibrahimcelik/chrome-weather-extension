@@ -64,7 +64,6 @@ export default defineBackground(() => {
         .then((data: OpenweatherData) => {
           chrome.storage.local.get(["cityList", "error"], (res) => {
             for (const city of res.cityList!) {
-              console.log(city, "city name");
               if (
                 data?.name?.trim().toLocaleLowerCase("tr-TR") ===
                 city?.name.trim().toLocaleLowerCase("tr-TR")
