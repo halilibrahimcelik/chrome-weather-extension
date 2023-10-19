@@ -26,7 +26,12 @@ const CityForm = ({ setOpen }: Props) => {
 
   const cityRef = useRef<HTMLInputElement>(null);
   const unitRef = useRef<HTMLSelectElement>(null);
-  const [testArr, setTestArr] = useState<[]>([]);
+  // useEffect(() => {
+  //   if (cityList && cityList.length > 0) {
+  //     cityRef.current!.value = cityList[0].name;
+  //   }
+  //   chrome.storage.local.get(["cityList"], (res) => {});
+  // }, []);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const city = cityRef.current?.value as string;

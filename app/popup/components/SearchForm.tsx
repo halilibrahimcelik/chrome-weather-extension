@@ -10,8 +10,16 @@ type Props = {};
 
 const SearchForm: React.FC<Props> = () => {
   const searchValue = useRef<HTMLInputElement>(null);
-  const { setCityList, setError, error, cityList, setLoading, unit } =
-    useMainContext();
+  const {
+    setCityList,
+    setError,
+    error,
+    cityList,
+    setLoading,
+    unit,
+    setPopup,
+    popup,
+  } = useMainContext();
   let newArr = [];
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -56,8 +64,17 @@ const SearchForm: React.FC<Props> = () => {
       });
   };
 
+  useEffect(() => {
+    const cityListWithOrder = cityList?.map((city, index) => ({
+      ...city,
+      order: index,
+    }));
+    console.log(cityListWithOrder);
+    chrome.storage.local.set({ cityList: cityListWithOrder });
+  }, [cityList]);
   const handleOverlay = () => {
-    chrome.storage.local.set({ cityList });
+    chrome.storage.local.set({ cityList, popup });
+    setPopup(!popup);
 
     chrome.tabs.query(
       {
@@ -65,12 +82,14 @@ const SearchForm: React.FC<Props> = () => {
       },
       (tabs) => {
         if (tabs.length > 0) {
-          chrome.tabs.sendMessage(tabs[0].id!, Messages.TOGGLE_OVERLAY);
+          chrome.tabs.sendMessage(tabs[0].id!, {
+            toggle: Messages.TOGGLE_OVERLAY,
+            cityList,
+          });
         }
       }
     );
   };
-
   return (
     <Box
       component={motion.form}

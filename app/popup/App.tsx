@@ -17,7 +17,13 @@ const App = () => {
     chrome.storage.local.get(
       ["cityList", "tempScale", "unit", "homeCity"],
       (res) => {
-        setCityList(res.cityList);
+        const sortedCityList = res.cityList?.sort((a: any, b: any) =>
+          a.order < b.order ? 1 : a.order > b.order ? -1 : 0
+        );
+
+        const newArr = [];
+
+        setCityList(sortedCityList);
         setUnit(res.tempScale);
         if (res.cityList && res.cityList.length > 0) {
           const homecityTemp =

@@ -22,20 +22,20 @@ export default defineContentScript({
       const { cityList, setCityList, setUnit, setPopup, popup } =
         useMainContext();
       const constrainRef = useRef(null);
-
       useEffect(() => {
         chrome.storage.local.get(["cityList", "tempScale", "popup"], (res) => {
           setUnit(res.tempScale);
-          setCityList(res.cityList);
+
           setPopup(res.popup);
         });
       }, [popup]);
       useEffect(() => {
         chrome.runtime.onMessage.addListener((message) => {
-          if (message === Messages.TOGGLE_OVERLAY) {
+          if (message.toggle === Messages.TOGGLE_OVERLAY) {
             setPopup(!popup);
 
             chrome.storage.local.set({ popup: !popup });
+            setCityList(message.cityList);
           }
         });
       }, [popup]);
