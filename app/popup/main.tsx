@@ -5,9 +5,7 @@ import "./style.css";
 import MainContextProvider from "./context/MainContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <MainContextProvider>
-      <App />
-    </MainContextProvider>
-  </React.StrictMode>
+  <MainContextProvider>
+    <App />
+  </MainContextProvider>
 );
