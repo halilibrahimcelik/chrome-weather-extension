@@ -90,12 +90,7 @@ const DarkMode = () => {
     const onlyCityNameWithSameOrder = cityList?.map((city, index) => {
       return { city: city.name, order: index };
     });
-    console.log(onlyCityNameArray);
-    const test = onlyCityNameWithSameOrder?.sort(
-      (a: any, b: any) => b.order - a.order
-    );
-    console.log(test?.map((city) => city.city));
-    console.log(cityList);
+
     if (onlyCityNameArray && onlyCityNameArray.length > 0) {
       chrome.storage.local.set({ cityList: [] });
       setCityList([]);
@@ -123,10 +118,7 @@ const DarkMode = () => {
           .then((data: OpenweatherData) => {
             setError(null);
             sortedArray.push({ ...data, order: cityName.order });
-            console.log(
-              sortedArray.sort((a, b) => a.order - b.order),
-              "sortedArray"
-            );
+
             // setCityList((prev) => {
             //   if (prev) {
             //     return [...prev, { ...data, order: cityName.order }];
