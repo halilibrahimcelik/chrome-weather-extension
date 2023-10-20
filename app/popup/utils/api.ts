@@ -3,6 +3,7 @@ export const API_KEY = import.meta.env.VITE_WHEATHER_API_KEY as string;
 export interface OpenweatherData {
   base: string;
   name: string;
+  order?: number;
   main: {
     feels_like: number;
     humidity: number;
