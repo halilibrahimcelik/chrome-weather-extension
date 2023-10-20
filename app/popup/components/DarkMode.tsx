@@ -50,7 +50,7 @@ const MetricSwitch = styled(Switch)(({ theme }) => ({
       transform: "translateY(-50%)",
       width: 16,
       height: 16,
-      right: 10,
+      right: 12,
     },
   },
   "& .MuiSwitch-thumb": {
@@ -84,7 +84,13 @@ const DarkMode = () => {
     });
   };
   useEffect(() => {
-    const onlyCityNameArray = cityList?.map((city) => city.name);
+    const onlyCityNameArray = cityList?.map((city, index) => {
+      return { name: city.name, order: city.order };
+    });
+    const onlyCityNameWithSameOrder = cityList?.map((city, index) => {
+      return { city: city.name, order: index };
+    });
+
     if (onlyCityNameArray && onlyCityNameArray.length > 0) {
       chrome.storage.local.set({ cityList: [] });
       setCityList([]);
@@ -95,10 +101,10 @@ const DarkMode = () => {
       if (res.tempScale === "metric") setChecked(true);
       else setChecked(false);
     });
-
+    let sortedArray: any[] = [];
     if (onlyCityNameArray) {
       for (const cityName of onlyCityNameArray!) {
-        fetchRequest(cityName, unit === undefined ? "imperial" : unit)
+        fetchRequest(cityName.name, unit === undefined ? "imperial" : unit)
           .then((res) => {
             setLoading(true);
             if (res.status === 404) throw new Error("City not found");
@@ -111,13 +117,21 @@ const DarkMode = () => {
           })
           .then((data: OpenweatherData) => {
             setError(null);
-            setCityList((prev) => {
-              if (prev) {
-                return [...prev, data];
-              } else {
-                return [data];
-              }
-            });
+            sortedArray.push({ ...data, order: cityName.order });
+
+            // setCityList((prev) => {
+            //   if (prev) {
+            //     return [...prev, { ...data, order: cityName.order }];
+            //   } else {
+            //     return [{ ...data, order: cityName.order }];
+            //   }
+            // });
+            setTimeout(() => {
+              chrome.storage.local.set({
+                cityList: sortedArray.sort((a, b) => a.order - b.order),
+              });
+              setCityList(sortedArray.sort((a, b) => a.order - b.order));
+            }, 700);
           })
           .catch((err) => setError(err))
           .finally(() => {

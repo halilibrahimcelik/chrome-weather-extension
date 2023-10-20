@@ -50,9 +50,9 @@ const SearchForm: React.FC<Props> = () => {
         setError(null);
         setCityList((prev) => {
           if (prev) {
-            return [...prev, data];
+            return [...prev, { ...data, order: prev.length }];
           } else {
-            return [data];
+            return [{ ...data, order: 0 }];
           }
         });
       })
@@ -69,7 +69,6 @@ const SearchForm: React.FC<Props> = () => {
       ...city,
       order: index,
     }));
-    console.log(cityListWithOrder);
     chrome.storage.local.set({ cityList: cityListWithOrder });
   }, [cityList]);
   const handleOverlay = () => {

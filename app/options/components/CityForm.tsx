@@ -58,11 +58,11 @@ const CityForm = ({ setOpen }: Props) => {
         chrome.storage.local.get(["cityList", "tempScale"], (res) => {
           if (res.cityList) {
             chrome.storage.local.set({
-              cityList: [data, ...cityList!.slice(1)],
+              cityList: [{ ...data, order: 0 }, ...cityList!.slice(1)],
             });
           } else {
             chrome.storage.local.set({
-              cityList: [data],
+              cityList: [{ ...data, order: 0 }],
             });
           }
           chrome.storage.local.set({ tempScale: unit });
