@@ -50,7 +50,7 @@ const MetricSwitch = styled(Switch)(({ theme }) => ({
       transform: "translateY(-50%)",
       width: 16,
       height: 16,
-      right: 10,
+      right: 12,
     },
   },
   "& .MuiSwitch-thumb": {

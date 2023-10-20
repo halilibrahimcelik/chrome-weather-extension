@@ -4,7 +4,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-
+import HomeWorkRoundedIcon from "@mui/icons-material/HomeWorkRounded";
 import { OpenweatherData } from "../utils/api";
 import { Divider, Grid, Skeleton } from "@mui/material";
 import { motion } from "framer-motion";
@@ -37,10 +37,14 @@ const CityCard: React.FC<Props> = ({ info, index }) => {
       transition={{ duration: 0.3, ease: "easeIn", staggerChildren: 0.4 }}
       exit={{ scale: 0.5, opacity: 0, y: -100 }}
       sx={{ minWidth: 340, borderRadius: 0 }}
-      className={`${index === 0 && "pt-4"}`}
     >
       <CardContent>
         <Grid container justifyContent={"space-between"} alignItems={"center"}>
+          {index === 0 && (
+            <Grid className={`${index === 0 && "py-2"}`} item xs={12}>
+              <HomeWorkRoundedIcon titleAccess="Your home city" />
+            </Grid>
+          )}
           <Grid item xs={6}>
             <Typography variant="h4" sx={{ color: "primary.main" }}>
               {loading ? <Skeleton /> : name}

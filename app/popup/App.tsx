@@ -20,7 +20,6 @@ const App = () => {
         const sortedCityList = res.cityList?.sort(
           (a: any, b: any) => a.order > b.order
         );
-        console.log(sortedCityList);
 
         setCityList(sortedCityList);
         setUnit(res.tempScale);
