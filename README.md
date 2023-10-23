@@ -23,11 +23,12 @@ WeatherNow+ is your go-to Chrome extension for quick and accurate weather update
 4. Customize temperature units in the settings menu.
 
 Stay ahead of the weather with WeatherNow+. Download now and experience weather updates like never before!
+
+
 [Download Now](https://chrome.google.com/webstore/detail/weathernow%2B/iefbbnfnecebpgjlhdbbgdkiigbblmcm)
 
 *Note: WeatherNow+ requires an internet connection to fetch real-time weather data.*
 
-[Download Now](chrome-extension-store-link)
 
 *For support or feedback, contact us at hibrahim.dev@gmail.com*
 
